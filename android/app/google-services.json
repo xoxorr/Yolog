@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "323570209857",
+    "project_id": "yolog-781c1",
+    "storage_bucket": "yolog-781c1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323570209857:android:4d2647a96ac71de87862c0",
+        "android_client_info": {
+          "package_name": "com.yolog.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "323570209857-23jali1i4imssupgao9m8ar7i7duiqsc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALGPGpb-0s7kNR9wiWX3ldE5PZXKCXg_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "323570209857-23jali1i4imssupgao9m8ar7i7duiqsc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "323570209857-juubpirtbosvfv8a9t6t7607ni6ocj04.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.yolog"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
