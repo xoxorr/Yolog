@@ -8,8 +8,8 @@ class MainHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = 16.0;
-    double horizontalPadding = MediaQuery.of(context).size.width * 0.05;
+    double fontSize = 16.0; // 기본 글꼴 크기
+    double horizontalPadding = MediaQuery.of(context).size.width * 0.15; // 화면 너비의 15%를 양옆 여백으로 설정
 
     return Scaffold(
       appBar: PreferredSize(
@@ -22,7 +22,7 @@ class MainHomeScreen extends StatelessWidget {
                 Text(
                   'Yolog',
                   style: TextStyle(
-                    fontSize: fontSize,
+                    fontSize: 24.0, // Yolog 텍스트 크기를 24로 설정
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Pretendard',
                     color: isDarkMode ? Colors.white : Colors.black,
@@ -48,7 +48,7 @@ class MainHomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            backgroundColor: isDarkMode ? Colors.black : Color(0xFFFFFFF0),
+            backgroundColor: isDarkMode ? Colors.black.withOpacity(0.8) : Color(0xFFFFFFF0).withOpacity(0.8),
             elevation: 0,
           ),
         ),

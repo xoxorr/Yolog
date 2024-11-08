@@ -21,13 +21,13 @@ class _YologState extends State<Yolog> {
           ? ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.black.withOpacity(0.5), // 불투명 설정
         ),
       )
           : ThemeData.light().copyWith(
         scaffoldBackgroundColor: Color(0xFFFFFFF0),
         appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFFFFFFF0),
+          backgroundColor: Color(0xFFFFFFF0).withOpacity(0.5), // 불투명 설정
         ),
       ),
       home: MainHomeScreen(
