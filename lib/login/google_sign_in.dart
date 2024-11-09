@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<void> _handleGoogleSignIn() async {
+    try {
+      await _googleSignIn.signIn();
+      // 로그인 성공 시 처리
+    } catch (error) {
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +72,7 @@ class LoginScreen extends StatelessWidget {
             Divider(),
             SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () {
-                // 구글 로그인 로직 추가
-              },
+              onPressed: _handleGoogleSignIn,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
                 padding: EdgeInsets.symmetric(vertical: 12.0),
