@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  void _login() async {
-    try {
-      await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      Navigator.pop(context);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('로그인에 실패했습니다. 다시 시도해주세요.')),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('로그인'),
+        title: Text("로그인"),
+        backgroundColor: Color(0xFF003366), // 지정된 색상
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -38,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: '이메일'),
+              decoration: InputDecoration(labelText: '이메일 주소'),
             ),
             TextField(
               controller: passwordController,
@@ -47,8 +27,39 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _login,
+              onPressed: () {
+                // 로그인 로직 추가 필요
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF003366), // 버튼 색상
+              ),
               child: Text('로그인'),
+            ),
+            TextButton(
+              onPressed: () {
+                // 회원가입 로직 추가 필요
+              },
+              child: Text('신규회원가입'),
+            ),
+            TextButton(
+              onPressed: () {
+                // 비밀번호 찾기 로직 추가 필요
+              },
+              child: Text('비밀번호 찾기'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () {
+                // 구글 로그인 로직 추가 필요
+              },
+              icon: Icon(Icons.login, color: Colors.black),
+              label: Text(
+                '구글 로그인',
+                style: TextStyle(color: Colors.black),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white, // 흰색 배경
+              ),
             ),
           ],
         ),
