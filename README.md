@@ -4,5 +4,5 @@ Yolog project.
 
 ## update
 
-home_main
+home_main </br>
 login_screen
