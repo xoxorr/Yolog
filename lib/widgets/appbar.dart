@@ -4,52 +4,45 @@ import '../login/login.dart'; // LoginScreen 경로 추가
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isDarkMode;
   final VoidCallback toggleTheme;
-  final VoidCallback? onLogoTap; // Yolog 로고 클릭 동작 추가
-  final bool automaticallyImplyLeading;
-  final Widget? leading; // leading 매개변수 추가
+  final Widget? leading;
+  final Color backgroundColor;
 
   CommonAppBar({
     required this.isDarkMode,
     required this.toggleTheme,
-    this.onLogoTap,
-    this.automaticallyImplyLeading = true,
-    this.leading, // leading 매개변수 추가
+    this.leading,
+    required this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    // 화면 너비를 기반으로 검색창 너비를 동적으로 설정
+    // 검색창의 너비를 동적으로 설정
     double screenWidth = MediaQuery.of(context).size.width;
-    double searchWidth = screenWidth * 0.3; // 기본 너비는 화면의 30%
-    if (searchWidth > 500) searchWidth = 500; // 최대 너비 제한
-    if (searchWidth < 240) searchWidth = 240; // 최소 너비 제한
+    double searchWidth = screenWidth * 0.3;
+    if (searchWidth > 500) searchWidth = 500;
+    if (searchWidth < 240) searchWidth = 240;
 
     return AppBar(
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      backgroundColor: isDarkMode ? Colors.black : Colors.white,
-      leading: leading, // leading 속성 설정
+      backgroundColor: backgroundColor,
+      leading: leading,
       title: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap: onLogoTap,
-            child: Text(
-              'Yolog',
-              style: TextStyle(
-                fontFamily: 'Pretendard', // Pretendard 폰트 적용
-                color: Color(0xFF4169E1),
-                fontWeight: FontWeight.bold,
-                fontSize: 24.0,
-              ),
+          Text(
+            'Yolog',
+            style: TextStyle(
+              color: Color(0xFF4169E1),
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0,
+              fontFamily: 'Pretendard',
             ),
           ),
-          Spacer(), // 여유 공간
+          Spacer(),
           // 검색창
           Container(
-            width: searchWidth, // 동적으로 계산된 너비 적용
+            width: searchWidth,
             child: TextField(
               style: TextStyle(
-                fontFamily: 'Pretendard', // Pretendard 폰트 적용
+                fontFamily: 'Pretendard',
                 color: isDarkMode ? Colors.white : Colors.black,
               ),
               decoration: InputDecoration(
@@ -59,7 +52,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 hintText: '검색',
                 hintStyle: TextStyle(
-                  fontFamily: 'Pretendard', // Pretendard 폰트 적용
+                  fontFamily: 'Pretendard',
                   color: isDarkMode ? Colors.grey[400] : Colors.grey[700],
                 ),
                 border: OutlineInputBorder(
@@ -75,7 +68,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          Spacer(), // 여유 공간
+          Spacer(),
         ],
       ),
       actions: [
@@ -88,9 +81,11 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         TextButton(
           onPressed: () {
+            // 로그인 페이지로 이동하는 기능 구현
             showDialog(
               context: context,
               builder: (BuildContext context) {
+                // LoginScreen 위젯을 사용하여 로그인 창 표시
                 return Dialog(
                   backgroundColor: Colors.transparent,
                   child: LoginScreen(
@@ -104,8 +99,8 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Text(
             '로그인',
             style: TextStyle(
-              fontFamily: 'Pretendard', // Pretendard 폰트 적용
               color: Color(0xFF4169E1),
+              fontFamily: 'Pretendard',
             ),
           ),
         ),

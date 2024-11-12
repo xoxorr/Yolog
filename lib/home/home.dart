@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: CommonAppBar(
         isDarkMode: widget.isDarkMode,
         toggleTheme: widget.toggleTheme,
+        backgroundColor: widget.isDarkMode ? Colors.black : Colors.white, // backgroundColor 추가
         leading: isLargeScreen
             ? null
             : IconButton(
@@ -66,35 +67,30 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
       body: Stack(
         children: [
-          // 메인 콘텐츠
           Row(
             children: [
               if (isLargeScreen)
                 SidebarWidget(
                   isDarkMode: widget.isDarkMode,
                   sidebarWidth: sidebarWidth,
+                  backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
                 ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: ListView(
                     children: [
-                      // 블로그 소개 섹션
+                      // 이미지 삽입 섹션
                       Center(
                         child: Container(
-                          padding: EdgeInsets.all(16.0),
+                          width: double.infinity,
+                          height: 200.0, // 이미지 높이 설정
                           decoration: BoxDecoration(
-                            color: widget.isDarkMode ? Colors.grey[800] : Color(0xFFFFF0E0),
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Text(
-                            'Yolog는 여행을 사랑하는 사람들을 위한 플랫폼입니다. 여행 경험을 공유하고, 다양한 여행지와 활동에 대한 이야기를 기록할 수 있습니다.',
-                            style: TextStyle(
-                              color: widget.isDarkMode ? Colors.white : Colors.black,
-                              fontSize: 16.0,
-                              fontFamily: 'Pretendard',
+                            image: DecorationImage(
+                              image: AssetImage('asset/Pngtreeworldtravel1185773.png'), // 이미지 경로
+                              fit: BoxFit.cover, // 이미지 크기 조절 방식
                             ),
-                            textAlign: TextAlign.center,
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
                         ),
                       ),
@@ -105,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         'Best 게시글',
                         style: TextStyle(
                           color: Color(0xFF4169E1),
-                          fontSize: 20.0,
+                          fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pretendard',
                         ),
@@ -134,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  '이곳에 게시글 내용을 입력하세요. 내용이 길 경우에도 디자인이 유지되도록 적절하게 작성됩니다...',
+                                  '이곳에 게시글 내용을 입력하세요...',
                                   style: TextStyle(
                                     color: widget.isDarkMode ? Colors.grey[300] : Colors.black,
                                     fontSize: 14.4,
@@ -153,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         '주목받는 멤버',
                         style: TextStyle(
                           color: Color(0xFF4169E1),
-                          fontSize: 20.0,
+                          fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pretendard',
                         ),
@@ -202,13 +198,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         ),
                       ),
                       SizedBox(height: 20),
-
-                      // "전체 보기" 섹션
                       Text(
                         '전체 보기',
                         style: TextStyle(
                           color: Color(0xFF4169E1),
-                          fontSize: 20.0,
+                          fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pretendard',
                         ),
@@ -238,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                                 ),
                                 SizedBox(height: 8),
                                 Text(
-                                  '이곳에 더미 게시글 내용을 입력하세요. 내용이 길 경우에도 디자인이 유지되도록 적절하게 작성됩니다...',
+                                  '이곳에 더미 게시글 내용을 입력하세요...',
                                   style: TextStyle(
                                     color: widget.isDarkMode ? Colors.grey[300] : Colors.black,
                                     fontSize: 14.4,
@@ -256,14 +250,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               ),
             ],
           ),
-          // 어두운 배경 및 슬라이드 사이드바
-          if (!isLargeScreen && isSidebarVisible)
-            GestureDetector(
-              onTap: toggleSidebar,
-              child: Container(
-                color: Colors.black.withOpacity(0.5), // 어두운 배경
-              ),
-            ),
           if (!isLargeScreen)
             SlideTransition(
               position: _slideAnimation,
@@ -273,6 +259,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 child: SidebarWidget(
                   isDarkMode: widget.isDarkMode,
                   sidebarWidth: sidebarWidth,
+                  backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
                 ),
               ),
             ),
