@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'home/home.dart'; // 메인 홈 스크린 경로
-//import 'login/login_screen.dart'; // 로그인 스크린 경로
+import 'login/login.dart'; // 로그인 스크린 경로
 import 'firebase_options.dart'; // Firebase 옵션 파일
 
 void main() async {
@@ -30,14 +30,20 @@ class _YologState extends State<Yolog> {
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.black.withOpacity(0.5), // 불투명 설정
         ),
+        textTheme: ThemeData.dark().textTheme.apply(
+          fontFamily: 'Pretendard', // Pretendard 폰트 적용
+        ),
       )
           : ThemeData.light().copyWith(
         scaffoldBackgroundColor: Color(0xFFFFFFF0),
         appBarTheme: AppBarTheme(
           backgroundColor: Color(0xFFFFFFF0).withOpacity(0.5), // 불투명 설정
         ),
+        textTheme: ThemeData.light().textTheme.apply(
+          fontFamily: 'Pretendard', // Pretendard 폰트 적용
+        ),
       ),
-      home: MainHomeScreen(
+      home: HomeScreen(
         isDarkMode: isDarkMode,
         toggleTheme: _toggleTheme,
       ),
