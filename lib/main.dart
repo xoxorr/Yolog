@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'home/main_home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'home/home.dart'; // 메인 홈 스크린 경로
+//import 'login/login_screen.dart'; // 로그인 스크린 경로
+import 'firebase_options.dart'; // Firebase 옵션 파일
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(Yolog());
 }
 
