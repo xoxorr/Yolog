@@ -260,7 +260,7 @@ class PostCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
               image: DecorationImage(
-                image: AssetImage('assets/sample_image.png'),
+                image: AssetImage('asset/KakaoTalk20241113154504706.png'),
                 fit: BoxFit.cover,
               ),
             ),
