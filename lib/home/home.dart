@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       appBar: CommonAppBar(
         isDarkMode: widget.isDarkMode,
         toggleTheme: widget.toggleTheme,
-        backgroundColor: widget.isDarkMode ? Colors.black : Colors.white, // backgroundColor 추가
+        backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
         leading: isLargeScreen
             ? null
             : IconButton(
@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
       body: Stack(
         children: [
-          // 메인 콘텐츠
           Row(
             children: [
               if (isLargeScreen)
@@ -77,15 +76,15 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
                 ),
               Expanded(
-                child: Padding(
+                child: ListView(
                   padding: const EdgeInsets.all(16.0),
-                  child: ListView(
-                    children: [
-                      // 이미지 섹션
-                      Center(
+                  children: [
+                    // 이미지 섹션 (1/3 크기로 더 줄임)
+                    Center(
+                      child: AspectRatio(
+                        aspectRatio: 16 / 5, // 이미지 비율 설정 (더 줄임)
                         child: Container(
-                          width: double.infinity,
-                          height: 200.0,
+                          height: 100.0, // 이미지 높이를 더 줄임
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('asset/Pngtreeworldtravel1185773.png'),
@@ -94,9 +93,12 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
-                      // Best 게시글 섹션
-                      Text(
+                    ),
+                    SizedBox(height: 20),
+                    // Best 게시글 섹션
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         'Best 게시글',
                         style: TextStyle(
                           color: Color(0xFF4169E1),
@@ -105,116 +107,56 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           fontFamily: 'Pretendard',
                         ),
                       ),
-                      SizedBox(height: 10),
-                      // Best 게시글 리스트
-                      Column(
-                        children: List.generate(3, (index) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 20.0),
-                            padding: EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: widget.isDarkMode ? Colors.grey[800] : Colors.white.withOpacity(0.8),
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Best 게시글 ${index + 1}',
-                                  style: TextStyle(
-                                    color: widget.isDarkMode ? Colors.white : Colors.black,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Pretendard',
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  '이곳에 게시글 내용을 입력하세요. 내용이 길 경우에도 디자인이 유지되도록 적절하게 작성됩니다...',
-                                  style: TextStyle(
-                                    color: widget.isDarkMode ? Colors.grey[300] : Colors.black,
-                                    fontSize: 14.4,
-                                    fontFamily: 'Pretendard',
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-                      ),
-                      SizedBox(height: 20),
-                      // 주목받는 멤버 섹션
-                      Text(
-                        '주목받는 멤버',
-                        style: TextStyle(
-                          color: Color(0xFF4169E1),
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard',
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: List.generate(10, (index) {
-                            return Container(
-                              margin: EdgeInsets.only(right: 16.0),
-                              width: 120,
-                              height: 140,
-                              decoration: BoxDecoration(
-                                color: widget.isDarkMode ? Colors.grey[800] : Colors.white.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(16.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 5,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
+                    ),
+                    SizedBox(height: 10),
+                    Column(
+                      children: List.generate(3, (index) {
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 20.0),
+                          padding: EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: widget.isDarkMode ? Colors.grey[800] : Colors.white.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(8.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: widget.isDarkMode ? Colors.grey[700] : Colors.grey[400],
-                                    child: Text(
-                                      '${index + 1}',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 8),
-                                  Text(
-                                    '사용자 ${index + 1}',
-                                    style: TextStyle(
-                                      color: widget.isDarkMode ? Colors.white : Colors.black,
-                                      fontSize: 16.0,
-                                      fontFamily: 'Pretendard',
-                                    ),
-                                  ),
-                                ],
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Best 게시글 ${index + 1}',
+                                style: TextStyle(
+                                  color: widget.isDarkMode ? Colors.white : Colors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Pretendard',
+                                ),
                               ),
-                            );
-                          }),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      // "전체 보기" 섹션
-                      Text(
+                              SizedBox(height: 8),
+                              Text(
+                                '이곳에 게시글 내용을 입력하세요. 내용이 길 경우에도 디자인이 유지되도록 적절하게 작성됩니다...',
+                                style: TextStyle(
+                                  color: widget.isDarkMode ? Colors.grey[300] : Colors.black,
+                                  fontSize: 14.4,
+                                  fontFamily: 'Pretendard',
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                    SizedBox(height: 20),
+                    // 전체 보기 섹션
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
                         '전체 보기',
                         style: TextStyle(
                           color: Color(0xFF4169E1),
@@ -222,54 +164,25 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Pretendard',
                         ),
-                        textAlign: TextAlign.left,
                       ),
-                      SizedBox(height: 10),
-                      Column(
-                        children: List.generate(5, (index) {
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 20.0),
-                            padding: EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: widget.isDarkMode ? Colors.grey[800] : Colors.white.withOpacity(0.8),
-                              borderRadius: BorderRadius.circular(8.0),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '게시글 ${index + 1}',
-                                  style: TextStyle(
-                                    color: widget.isDarkMode ? Colors.white : Colors.black,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Pretendard',
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  '이곳에 더미 게시글 내용을 입력하세요. 내용이 길 경우에도 디자인이 유지되도록 적절하게 작성됩니다...',
-                                  style: TextStyle(
-                                    color: widget.isDarkMode ? Colors.grey[300] : Colors.black,
-                                    fontSize: 14.4,
-                                    fontFamily: 'Pretendard',
-                                  ),
-                                ),
-                              ],
-                            ),
+                    ),
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Wrap(
+                        spacing: 16.0,
+                        runSpacing: 16.0,
+                        alignment: WrapAlignment.center,
+                        children: List.generate(10, (index) {
+                          return PostCard(
+                            isDarkMode: widget.isDarkMode,
+                            title: '게시글 ${index + 1}',
+                            description: '이곳에 게시글 내용을 입력하세요...',
                           );
                         }),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -309,6 +222,70 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                 },
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class PostCard extends StatelessWidget {
+  final bool isDarkMode;
+  final String title;
+  final String description;
+
+  PostCard({required this.isDarkMode, required this.title, required this.description});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 304.0,
+      height: 374.0,
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.grey[800] : Colors.white.withOpacity(0.8),
+        borderRadius: BorderRadius.circular(16.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 200.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+              image: DecorationImage(
+                image: AssetImage('assets/sample_image.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                color: isDarkMode ? Colors.white : Colors.black,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              description,
+              style: TextStyle(
+                color: isDarkMode ? Colors.grey[300] : Colors.black,
+                fontSize: 14.0,
+              ),
+            ),
+          ),
         ],
       ),
     );
