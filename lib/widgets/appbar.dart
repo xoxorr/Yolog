@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
 import '../login/login.dart'; // LoginScreen 경로 추가
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isDarkMode;
   final VoidCallback toggleTheme;
   final Widget? leading;
-  final Color backgroundColor;
+  final Color backgroundColor; // backgroundColor 매개변수 추가
 
   CommonAppBar({
     required this.isDarkMode,
     required this.toggleTheme,
     this.leading,
-    required this.backgroundColor,
+    required this.backgroundColor, // backgroundColor 받기
   });
 
   @override
@@ -23,17 +24,23 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (searchWidth < 240) searchWidth = 240;
 
     return AppBar(
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor.withOpacity(0.7), // 투명도 설정
+      elevation: 0, // 그림자 제거
       leading: leading,
       title: Row(
         children: [
-          Text(
-            'Yolog',
-            style: TextStyle(
-              color: Color(0xFF4169E1),
-              fontWeight: FontWeight.bold,
-              fontSize: 24.0,
-              fontFamily: 'Pretendard',
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).popUntil((route) => route.isFirst);
+            },
+            child: Text(
+              'Yolog',
+              style: TextStyle(
+                color: Color(0xFF4169E1),
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0,
+                fontFamily: 'Pretendard',
+              ),
             ),
           ),
           Spacer(),
@@ -50,7 +57,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Icons.search,
                   color: isDarkMode ? Colors.white : Colors.black,
                 ),
-                hintText: '검색',
+                hintText: '검색어를 입력해주세요!',
                 hintStyle: TextStyle(
                   fontFamily: 'Pretendard',
                   color: isDarkMode ? Colors.grey[400] : Colors.grey[700],
@@ -81,11 +88,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         TextButton(
           onPressed: () {
-            // 로그인 페이지로 이동하는 기능 구현
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                // LoginScreen 위젯을 사용하여 로그인 창 표시
                 return Dialog(
                   backgroundColor: Colors.transparent,
                   child: LoginScreen(
@@ -105,6 +110,14 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ],
+      flexibleSpace: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0), // 블러 효과 추가
+          child: Container(
+            color: Colors.transparent, // 투명 배경
+          ),
+        ),
+      ),
     );
   }
 
