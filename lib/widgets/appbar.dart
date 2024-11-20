@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../login/login.dart'; // LoginScreen 경로 추가
 
 class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isDarkMode;
   final VoidCallback toggleTheme;
-  final Widget? leading;
-  final Color backgroundColor; // backgroundColor 매개변수 추가
+  final Color backgroundColor;
+  final List<Widget>? actions;
 
   CommonAppBar({
     required this.isDarkMode,
     required this.toggleTheme,
-    this.leading,
-    required this.backgroundColor, // backgroundColor 받기
+    required this.backgroundColor,
+    this.actions,
   });
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser; // 현재 로그인된 사용자 가져오기
+
     // 검색창의 너비를 동적으로 설정
     double screenWidth = MediaQuery.of(context).size.width;
     double searchWidth = screenWidth * 0.3;
@@ -24,9 +27,9 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
     if (searchWidth < 240) searchWidth = 240;
 
     return AppBar(
-      backgroundColor: backgroundColor.withOpacity(0.7), // 투명도 설정
-      elevation: 0, // 그림자 제거
-      leading: leading,
+      backgroundColor: backgroundColor.withOpacity(0.7),
+      elevation: 0,
+      automaticallyImplyLeading: false, // 뒤로가기 버튼 제거
       title: Row(
         children: [
           GestureDetector(
@@ -53,7 +56,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
                 color: isDarkMode ? Colors.white : Colors.black,
               ),
               decoration: InputDecoration(
-                prefixIcon: Icon(
+                suffixIcon: Icon(
                   Icons.search,
                   color: isDarkMode ? Colors.white : Colors.black,
                 ),
@@ -79,6 +82,7 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       actions: [
+        // 다크 모드 변환 버튼: 항상 표시
         IconButton(
           icon: Icon(
             isDarkMode ? Icons.dark_mode : Icons.light_mode,
@@ -86,35 +90,78 @@ class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: toggleTheme,
         ),
-        TextButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  backgroundColor: Colors.transparent,
-                  child: LoginScreen(
-                    isDarkMode: isDarkMode,
-                    toggleTheme: toggleTheme,
-                  ),
-                );
-              },
-            );
-          },
-          child: Text(
-            '로그인',
-            style: TextStyle(
-              color: Color(0xFF4169E1),
-              fontFamily: 'Pretendard',
+        // 로그인 상태에 따른 UI
+        if (user == null)
+          TextButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    backgroundColor: Colors.transparent,
+                    child: LoginScreen(
+                      isDarkMode: isDarkMode,
+                      toggleTheme: toggleTheme,
+                    ),
+                  );
+                },
+              );
+            },
+            child: Text(
+              '로그인',
+              style: TextStyle(
+                color: Color(0xFF4169E1),
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Pretendard',
+              ),
             ),
+          )
+        else
+          PopupMenuButton<String>(
+            color: Colors.white, // 메뉴 배경을 흰색으로 설정
+            icon: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: user.photoURL != null
+                  ? Image.network(
+                user.photoURL!,
+                width: 40,
+                height: 40,
+                fit: BoxFit.cover,
+              )
+                  : Icon(
+                Icons.account_circle,
+                size: 40,
+                color: Color(0xFF4169E1),
+              ),
+            ),
+            onSelected: (value) {
+              if (value == 'settings') {
+                // 설정 페이지로 이동하는 로직 추가
+              } else if (value == 'logout') {
+                FirebaseAuth.instance.signOut(); // 로그아웃
+                Navigator.of(context).popUntil((route) => route.isFirst); // 홈 화면으로 이동
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 'settings',
+                  child: Text('설정'),
+                ),
+                PopupMenuItem(
+                  value: 'logout',
+                  child: Text('로그아웃'),
+                ),
+              ];
+            },
           ),
-        ),
       ],
       flexibleSpace: ClipRRect(
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0), // 블러 효과 추가
+          filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
           child: Container(
-            color: Colors.transparent, // 투명 배경
+            color: Colors.transparent,
           ),
         ),
       ),
